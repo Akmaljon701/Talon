@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Talon</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col">
+                <a href="{% url 'talon_list' %}" class="btn btn-secondary">Ortga</a> <!-- Ortga tugmasi -->
+            </div>
+            <div class="col text-center">
+                <h1 class="my-4">Add New Talon</h1>
+            </div>
+            <div class="col"></div>
+        </div>
+
+        {% if success_message %}
+        <div class="alert alert-success" role="alert">
+            {{ success_message }}
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="fullname">Full Name:</label>
+                <input type="text" class="form-control" id="fullname" name="fullname" required>
+            </div>
+            <div class="form-group">
+                <label for="position">Position:</label>
+                <input type="text" class="form-control" id="position" name="position" required>
+            </div>
+            <div class="form-group">
+                <label for="date_received">Date Received:</label>
+                <input type="date" class="form-control" id="date_received" name="date_received" required>
+            </div>
+            <div class="form-group">
+                <label for="talon_number">Talon Number:</label>
+                <input type="text" class="form-control" id="talon_number" name="talon_number" required>
+            </div>
+            <div class="form-group">
+                <label for="reason_received">Reason Received:</label>
+                <input type="text" class="form-control" id="reason_received" name="reason_received" required>
+            </div>
+            <div class="form-group">
+                <label for="discipline_order">Discipline Order:</label>
+                <input type="text" class="form-control" id="discipline_order" name="discipline_order" required>
+            </div>
+            <div class="form-group">
+                <label for="discipline_order_date">Discipline Order Date:</label>
+                <input type="date" class="form-control" id="discipline_order_date" name="discipline_order_date" required>
+            </div>
+            <div class="form-group">
+                <label for="discipline_type">Discipline Type:</label>
+                <input type="text" class="form-control" id="discipline_type" name="discipline_type" required>
+            </div>
+            <div class="form-group">
+                <label for="consequence_amount">Consequence Amount:</label>
+                <input type="number" step="0.01" class="form-control" id="consequence_amount" name="consequence_amount">
+            </div>
+            <div class="form-group">
+                <label for="note">Note:</label>
+                <textarea class="form-control" id="note" name="note"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Talon</button>
+        </form>
+    </div>
+</body>
+</html>
