@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Талонлар</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h3 class="text-center">Жамият корхона ва ташкилотларида меҳнат муҳофазаси бўйича олинган огоҳлантириш талонлари</h3>
+        <p class="text-center">{{ text }}</p>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="#">Талонлар</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="{% url 'add_talon' %}" class="btn btn-success">Талон қўшиш</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Чиқиш</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <form method="get" class="form-inline mb-4">
+            <div class="form-group">
+                <label for="from_date" class="mr-2">дан:</label>
+                <input type="date" class="form-control mr-4" id="from_date" name="from_date" value="{{ request.GET.from_date }}">
+            </div>
+            <div class="form-group">
+                <label for="to_date" class="mr-2">гача:</label>
+                <input type="date" class="form-control mr-4" id="to_date" name="to_date" value="{{ request.GET.to_date }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Филтерлаш</button>
+        </form>
+
+        <hr>
+
+        <!-- First Table -->
+        <h5 class="text-right">1-чи жадвал</h5>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="3">Тошкент РЖУ</th>
+                    <th colspan="3">Қўқон РЖУ</th>
+                    <th colspan="3">Бухоро РЖУ</th>
+                    <th colspan="3">Қарши РЖУ</th>
+                    <th colspan="3">Термиз РЖУ</th>
+                    <th colspan="3">Қунгирот РЖУ</th>
+                </tr>
+                <tr>
+                    <th>№1</th>
+                    <th>№2</th>
+                    <th>№3</th>
+                    <th>№1</th>
+                    <th>№2</th>
+                    <th>№3</th>
+                    <th>№1</th>
+                    <th>№2</th>
+                    <th>№3</th>
+                    <th>№1</th>
+                    <th>№2</th>
+                    <th>№3</th>
+                    <th>№1</th>
+                    <th>№2</th>
+                    <th>№3</th>
+                    <th>№1</th>
+                    <th>№2</th>
+                    <th>№3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ table1_data.Тошкент_РЖУ.1 }}</td>
+                    <td>{{ table1_data.Тошкент_РЖУ.2 }}</td>
+                    <td>{{ table1_data.Тошкент_РЖУ.3 }}</td>
+                    <td>{{ table1_data.Қўқон_РЖУ.1 }}</td>
+                    <td>{{ table1_data.Қўқон_РЖУ.2 }}</td>
+                    <td>{{ table1_data.Қўқон_РЖУ.3 }}</td>
+                    <td>{{ table1_data.Бухоро_РЖУ.1 }}</td>
+                    <td>{{ table1_data.Бухоро_РЖУ.2 }}</td>
+                    <td>{{ table1_data.Бухоро_РЖУ.3 }}</td>
+                    <td>{{ table1_data.Қарши_РЖУ.1 }}</td>
+                    <td>{{ table1_data.Қарши_РЖУ.2 }}</td>
+                    <td>{{ table1_data.Қарши_РЖУ.3 }}</td>
+                    <td>{{ table1_data.Термиз_РЖУ.1 }}</td>
+                    <td>{{ table1_data.Термиз_РЖУ.2 }}</td>
+                    <td>{{ table1_data.Термиз_РЖУ.3 }}</td>
+                    <td>{{ table1_data.Қунгирот_РЖУ.1 }}</td>
+                    <td>{{ table1_data.Қунгирот_РЖУ.2 }}</td>
+                    <td>{{ table1_data.Қунгирот_РЖУ.3 }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">{{ table1_data.Тошкент_РЖУ.jami }}</td>
+                    <td colspan="3">{{ table1_data.Қўқон_РЖУ.jami }}</td>
+                    <td colspan="3">{{ table1_data.Бухоро_РЖУ.jami }}</td>
+                    <td colspan="3">{{ table1_data.Қарши_РЖУ.jami }}</td>
+                    <td colspan="3">{{ table1_data.Термиз_РЖУ.jami }}</td>
+                    <td colspan="3">{{ table1_data.Қунгирот_РЖУ.jami }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <!-- Second Table -->
+        <h5 class="text-right">2-чи жадвал</h5>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Тошкент РЖУ</th>
+                    <th>Қўқон РЖУ</th>
+                    <th>Бухоро РЖУ</th>
+                    <th>Қарши РЖУ</th>
+                    <th>Термиз РЖУ</th>
+                    <th>Қунгирот РЖУ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ table2_data.Тошкент_РЖУ }}</td>
+                    <td>{{ table2_data.Қўқон_РЖУ }}</td>
+                    <td>{{ table2_data.Бухоро_РЖУ }}</td>
+                    <td>{{ table2_data.Қарши_РЖУ }}</td>
+                    <td>{{ table2_data.Термиз_РЖУ }}</td>
+                    <td>{{ table2_data.Қунгирот_РЖУ }}</td>
+                </tr>
+                <tr>
+                    <td colspan="5">ЖАМИ</td>
+                    <td>{{ table2_data.total_summa }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <!-- Third Table Title -->
+        <h5 class="text-right">3-чи жадвал</h5>
+
+        {% for branch in branches %}
+            <h6>{{ branch.name }}</h6>
+            {% if branch.branch_organizations.exists %}
+                {% for organization in branch.branch_organizations.all %}
+                    <h6>{{ organization.name }}</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Т/р</th>
+                                    <th>Ф.И.Ш.</th>
+                                    <th>Лавозими</th>
+                                    <th>Олинган санаси</th>
+                                    <th>Талон рақами</th>
+                                    <th>Олинган сабаби</th>
+                                    <th>Интизомий жазо буйруқ рақами, санаси ва тури</th>
+                                    <th>Интизомий жазо оқибатида олиб қолинган пул миқдори</th>
+                                    <th>Изоҳ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for talon in talons %}
+                                    {% if talon.organization == organization %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td><a href="{% url 'talon_update' talon.id %}">{{ talon.fullname }}</a></td>
+                                            <td>{{ talon.position }}</td>
+                                            <td>{{ talon.date_received|date:"d.m.Y" }}</td>
+                                            <td>{{ talon.talon_number }}</td>
+                                            <td>{{ talon.reason_received }}</td>
+                                            <td>Рақам: {{ talon.discipline_order }}, Сана: {{ talon.discipline_order_date|date:"d.m.Y" }}, Тури: {{ talon.discipline_type }}</td>
+                                            <td>{{ talon.consequence_amount }}</td>
+                                            <td>{{ talon.note }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            <hr>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Т/р</th>
+                                <th>Ф.И.Ш.</th>
+                                <th>Лавозими</th>
+                                <th>Олинган санаси</th>
+                                <th>Талон рақами</th>
+                                <th>Олинган сабаби</th>
+                                <th>Интизомий жазо буйруқ рақами, санаси ва тури</th>
+                                <th>Интизомий жазо оқибатида олиб қолинган пул миқдори</th>
+                                <th>Изоҳ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for talon in talons %}
+                                {% if talon.branch == branch and talon.organization is None %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'talon_update' talon.id %}">{{ talon.fullname }}</a></td>
+                                        <td>{{ talon.position }}</td>
+                                        <td>{{ talon.date_received|date:"d.m.Y" }}</td>
+                                        <td>{{ talon.talon_number }}</td>
+                                        <td>{{ talon.reason_received }}</td>
+                                        <td>Рақам: {{ talon.discipline_order }}, Сана: {{ talon.discipline_order_date|date:"d.m.Y" }}, Тури: {{ talon.discipline_type }}</td>
+                                        <td>{{ talon.consequence_amount }}</td>
+                                        <td>{{ talon.note }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+            <!-- Total sum for the branch -->
+            <p>{{ branch.name }} - Жами: </p>
+        {% endfor %}
+
+        <hr>
+
+        <!-- Overall total sum -->
+        <p>Умумий жами: </p>
+
+        <!-- Export button -->
+        <a href="{% url 'export_docx' %}?from_date={{ request.GET.from_date }}&to_date={{ request.GET.to_date }}" class="btn btn-primary">Экспорт килиш</a>
+        <hr>
+    </div>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

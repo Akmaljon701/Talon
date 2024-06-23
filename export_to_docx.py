@@ -30,7 +30,7 @@ def create_docx_with_tables(talons, from_date, to_date):
 
     # Add the first table title
     p = doc.add_paragraph()
-    p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    p.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
     run = p.add_run("1-чи жадвал")
     run.font.size = Pt(14)
 
@@ -96,7 +96,7 @@ def create_docx_with_tables(talons, from_date, to_date):
 
     # Add the second table title
     p = doc.add_paragraph()
-    p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    p.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
     run = p.add_run("2-чи жадвал")
     run.font.size = Pt(14)
 
@@ -128,7 +128,7 @@ def create_docx_with_tables(talons, from_date, to_date):
 
     # Add the third table title
     p = doc.add_paragraph()
-    p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    p.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
     run = p.add_run("3-чи жадвал")
     run.font.size = Pt(14)
 
@@ -178,6 +178,7 @@ def create_docx_with_tables(talons, from_date, to_date):
                     row_cells[6].text = f"Рақам: {talon.discipline_order}, Сана: {talon.discipline_order_date.strftime('%d.%m.%Y')}, Тури: {talon.discipline_type}"
                     row_cells[7].text = f"{talon.consequence_amount:.2f}" if talon.consequence_amount else ""
                     row_cells[8].text = talon.note or ""
+                doc.add_paragraph('Жами: ')
         else:
             # Add a new table for this branch
             table3 = doc.add_table(rows=1, cols=9)
@@ -208,6 +209,18 @@ def create_docx_with_tables(talons, from_date, to_date):
                 row_cells[6].text = f"Рақам: {talon.discipline_order}, Сана: {talon.discipline_order_date.strftime('%d.%m.%Y')}, Тури: {talon.discipline_type}"
                 row_cells[7].text = f"{talon.consequence_amount:.2f}" if talon.consequence_amount else ""
                 row_cells[8].text = talon.note or ""
+            doc.add_paragraph('Жами: ')
+        all_branch_amount = doc.add_paragraph(f'{branch.name} - Жами:')
+        run = all_branch_amount.runs[0]
+        run.bold = True
+        all_branch_amount.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+        all_branch_amount.runs[0].font.color.rgb = RGBColor(0, 0, 0)
+
+    all_amount = doc.add_paragraph(f'Умумий жами:  ')
+    run = all_amount.runs[0]
+    run.bold = True
+    all_amount.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    all_amount.runs[0].font.color.rgb = RGBColor(0, 0, 0)
 
     # Save the document to a BytesIO buffer
     buffer = io.BytesIO()

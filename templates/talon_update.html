@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Талон қўшиш</title>
+    <title>Талонни ўзгартириш</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -18,85 +18,90 @@
     <div class="container">
         <div class="row mb-4">
             <div class="col">
-                <a href="{% url 'get_talons_1_2_3_view' %}" class="btn btn-secondary">Ortga</a> <!-- Ortga tugmasi -->
+                <a href="{% url 'get_talons_1_2_3_view' %}" class="btn btn-secondary">Ortga</a>
             </div>
             <div class="col text-center">
-                <h1 class="my-4">Талон қўшиш</h1>
+                <h1 class="my-4">Талонни ўзгартириш</h1>
             </div>
             <div class="col"></div>
         </div>
 
-        {% if success_message %}
-        <div class="alert alert-success" role="alert">
-            {{ success_message }}
-        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endif %}
 
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="fullname">Ф.И.Ш.</label>
-                <input type="text" class="form-control" id="fullname" name="fullname" required>
+                <input type="text" class="form-control" id="fullname" name="fullname" value="{{ talon.fullname }}" required>
             </div>
             <div class="form-group">
                 <label for="branch">Филиал</label>
                 <select class="form-control" id="branch" name="branch" required>
                     <option value="">Филиал танланг</option>
                     {% for branch in branches %}
-                        <option value="{{ branch.id }}">{{ branch.name }}</option>
+                        <option value="{{ branch.id }}" {% if talon.branch.id == branch.id %} selected {% endif %}>{{ branch.name }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="form-group">
                 <label for="organization">Корхона</label>
-                <select class="form-control" id="organization" name="organization">
+                <select class="form-control" id="organization" name="organization" required>
                     <option value="">Корхона танланг</option>
+                    {% for org in organizations %}
+                        <option value="{{ org.id }}" {% if talon.organization.id == org.id %} selected {% endif %}>{{ org.name }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="form-group">
                 <label for="position">Лавозими</label>
-                <input type="text" class="form-control" id="position" name="position" required>
+                <input type="text" class="form-control" id="position" name="position" value="{{ talon.position }}" required>
             </div>
             <div class="form-group">
                 <label for="date_received">Олинган санаси</label>
-                <input type="date" class="form-control" id="date_received" name="date_received" required>
+                <input type="date" class="form-control" id="date_received" name="date_received" value="{{ talon.date_received|date:'Y-m-d' }}" required>
             </div>
             <div class="form-group">
                 <label for="talon_number">Талон рақами</label>
                 <select class="form-control" id="talon_number" name="talon_number" required>
                     <option value="">Талон рақамини танланг</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="1, 2">1, 2</option>
-                    <option value="1, 3">1, 3</option>
-                    <option value="2, 3">2, 3</option>
-                    <option value="1, 2, 3">1, 2, 3</option>
+                    <option value="1" {% if '1' in talon.talon_number %} selected {% endif %}>1</option>
+                    <option value="2" {% if '2' in talon.talon_number %} selected {% endif %}>2</option>
+                    <option value="3" {% if '3' in talon.talon_number %} selected {% endif %}>3</option>
+                    <option value="1, 2" {% if '1, 2' in talon.talon_number %} selected {% endif %}>1, 2</option>
+                    <option value="1, 3" {% if '1, 3' in talon.talon_number %} selected {% endif %}>1, 3</option>
+                    <option value="2, 3" {% if '2, 3' in talon.talon_number %} selected {% endif %}>2, 3</option>
+                    <option value="1, 2, 3" {% if '1, 2, 3' in talon.talon_number %} selected {% endif %}>1, 2, 3</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="reason_received">Олинган сабаби</label>
-                <input type="text" class="form-control" id="reason_received" name="reason_received" required>
+                <input type="text" class="form-control" id="reason_received" name="reason_received" value="{{ talon.reason_received }}" required>
             </div>
             <div class="form-group">
                 <label for="discipline_order">Интизомий жаза буйруқ рақами</label>
-                <input type="text" class="form-control" id="discipline_order" name="discipline_order" required>
+                <input type="text" class="form-control" id="discipline_order" name="discipline_order" value="{{ talon.discipline_order }}" required>
             </div>
             <div class="form-group">
                 <label for="discipline_order_date">Интизомий жаза буйруқ санаси</label>
-                <input type="date" class="form-control" id="discipline_order_date" name="discipline_order_date" required>
+                <input type="date" class="form-control" id="discipline_order_date" name="discipline_order_date" value="{{ talon.discipline_order_date|date:'Y-m-d' }}" required>
             </div>
             <div class="form-group">
                 <label for="discipline_type">Интизомий жаза тури</label>
-                <input type="text" class="form-control" id="discipline_type" name="discipline_type" required>
+                <input type="text" class="form-control" id="discipline_type" name="discipline_type" value="{{ talon.discipline_type }}" required>
             </div>
             <div class="form-group">
                 <label for="consequence_amount">Интизомий жаза оқибатида олиб қолинган пул миқдори</label>
-                <input type="number" step="0.01" class="form-control" id="consequence_amount" name="consequence_amount">
+                <input type="number" step="0.01" class="form-control" id="consequence_amount" name="consequence_amount" value="{{ talon.consequence_amount }}">
             </div>
             <div class="form-group">
                 <label for="note">Изоҳ</label>
-                <textarea class="form-control" id="note" name="note"></textarea>
+                <textarea class="form-control" id="note" name="note">{{ talon.note }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Сақлаш</button>
         </form>

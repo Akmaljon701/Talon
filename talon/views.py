@@ -1,14 +1,7 @@
 from datetime import datetime
-from django.contrib.auth import logout, authenticate, login
 from django.db.models import Sum
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.utils.dateparse import parse_date
-from talon.export_to_docx import create_docx_with_tables
 from utils.responses import success
-from .forms import TalonForm
 from .models import Talon, Branch, Organization
-from django.contrib.auth.decorators import login_required
 from .schemas import get_talons_1_2_schema, get_branches_schema, get_organizations_schema, create_talon_schema, \
     update_talon_schema
 from rest_framework.response import Response
@@ -112,70 +105,3 @@ def get_talons_1_2(request):
         'table1': table1_data,
         'table2': table2_data
     }, status=200)
-
-
-def login_page(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('talon_list')  # Redirect to your main page after successful login
-        else:
-            error_message = "Username yoki Password noto'g'ri!"
-            return render(request, 'login.html', {'error_message': error_message})
-    return render(request, 'login.html')
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('login_page')
-
-
-@login_required
-def talon_list(request):
-    from_date = request.GET.get('from_date')
-    to_date = request.GET.get('to_date')
-
-    talons = Talon.objects.all()
-
-    if from_date and to_date:
-        from_date = parse_date(from_date)
-        to_date = parse_date(to_date)
-        talons = talons.filter(date__range=[from_date, to_date])
-
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return render(request, 'talon_list.html', {'talons': talons})
-    return render(request, 'talon_list.html', {'talons': talons})
-
-
-def export_docx(request):
-    from_date = request.GET.get('from_date')
-    to_date = request.GET.get('to_date')
-
-    talons = Talon.objects.all()
-
-    from_date = parse_date(from_date)
-    to_date = parse_date(to_date)
-    talons = talons.filter(date__range=[from_date, to_date])
-    buffer = create_docx_with_tables(talons, from_date, to_date)
-
-    response = HttpResponse(buffer,
-                            content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-    response['Content-Disposition'] = 'attachment; filename="talon_list.docx"'
-
-    return response
-
-
-def add_talon(request):
-    if request.method == 'POST':
-        form = TalonForm(request.POST)
-        if form.is_valid():
-            form.save()
-            success_message = 'Muvafaqiyatli qo\'shildi'
-            return render(request, 'talon_add.html', {'form': form, 'success_message': success_message})
-    else:
-        form = TalonForm()
-
-    return render(request, 'talon_add.html', {'form': form})

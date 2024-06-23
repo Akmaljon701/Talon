@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'user',
     'talon',
+    'talon_template',
 ]
 
 MIDDLEWARE = [
